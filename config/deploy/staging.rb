@@ -15,7 +15,7 @@
 # server list. The second argument is a, or duck-types, Hash and is
 # used to set extended properties on the server.
 
-server 'geoblacklight.lib.virginia.edu', user: fetch(:user), roles: %w{web app}
+server 'geoblacklight.lib.virginia.edu', user: ENV['USER'], roles: %w{web app}
 #server 'geoblacklight.lib.virginia.edu', user: 'deploy', roles: %w{web app}
 
 set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system', 'public/uploads')
