@@ -35,6 +35,10 @@ gem 'capistrano-passenger', group: :development
 gem 'capistrano-rvm', group: :development
 gem 'highline', group: :development
 
+group :development do
+  gem 'dotenv', '~> 2.0.1'
+end
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
