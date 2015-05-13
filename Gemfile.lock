@@ -101,6 +101,9 @@ GEM
       warden (~> 1.2.3)
     devise-guests (0.3.3)
       devise
+    dotenv (2.0.1)
+    dotenv-rails (2.0.1)
+      dotenv (= 2.0.1)
     erubis (2.7.0)
     execjs (2.5.2)
     faraday (0.9.1)
@@ -242,6 +245,7 @@ DEPENDENCIES
   coffee-rails (~> 4.1.0)
   devise
   devise-guests (~> 0.3)
+  dotenv-rails
   geoblacklight
   highline
   jbuilder (~> 2.0)
