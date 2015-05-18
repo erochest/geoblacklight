@@ -11,7 +11,8 @@ ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
 # Default deploy_to directory is /var/www/my_app_name
 set :deploy_to, "/var/www/#{fetch(:application)}"
 
-#set :passenger_restart_with_sudo, true
+# See https://github.com/capistrano/passenger#usage
+set :passenger_restart_with_sudo, true
 
 # Default value for :scm is :git
 # set :scm, :git
@@ -20,10 +21,10 @@ set :deploy_to, "/var/www/#{fetch(:application)}"
 # set :format, :pretty
 
 # Default value for :log_level is :debug
-# set :log_level, :debug
+#set :log_level, :info
 
 # Default value for :pty is false
-# set :pty, true
+set :pty, true
 
 # Default value for :linked_files is []
 # set :linked_files, fetch(:linked_files, []).push('config/database.yml')
@@ -35,7 +36,7 @@ set :deploy_to, "/var/www/#{fetch(:application)}"
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
 
 # Default value for keep_releases is 5
-# set :keep_releases, 5
+set :keep_releases, 3
 
 namespace :deploy do
 
