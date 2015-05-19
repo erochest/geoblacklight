@@ -12,7 +12,7 @@ ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
 set :deploy_to, "/var/www/#{fetch(:application)}"
 
 # See https://github.com/capistrano/passenger#usage
-set :passenger_restart_with_sudo, true
+#set :passenger_restart_with_sudo, true
 
 # Default value for :scm is :git
 # set :scm, :git
@@ -21,7 +21,7 @@ set :passenger_restart_with_sudo, true
 # set :format, :pretty
 
 # Default value for :log_level is :debug
-#set :log_level, :info
+set :log_level, :info
 
 # Default value for :pty is false
 set :pty, true
@@ -40,12 +40,12 @@ set :keep_releases, 3
 
 namespace :deploy do
 
-  desc 'Restart your Passenger application - temporary fix'
-  task :restart do
-    on roles(:app) do
-      sudo "passenger-config restart-app #{fetch(:deploy_to)}"
-    end
-  end
+  #desc 'Restart your Passenger application - temporary fix'
+  #task :restart do
+    #on roles(:app) do
+      #sudo "passenger-config restart-app #{fetch(:deploy_to)}"
+    #end
+  #end
 
   after :publishing, :restart
 
