@@ -9,7 +9,8 @@ set :pty, true
 ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
 
 # Default deploy_to directory is /var/www/my_app_name
-set :deploy_to, "/var/www/#{fetch(:application)}"
+set :deploy_to, "/usr/local/projects/#{fetch(:application)}"
+#set :deploy_to, "/var/www/#{fetch(:application)}"
 
 # See https://github.com/capistrano/passenger#usage
 #set :passenger_restart_with_sudo, true
@@ -59,3 +60,5 @@ namespace :deploy do
   end
 
 end
+
+after "deploy", "deploy:migrate"
