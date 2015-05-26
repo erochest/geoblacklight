@@ -38,6 +38,8 @@ set :pty, true
 
 # Default value for keep_releases is 5
 set :keep_releases, 3
+set :rvm_map_bins, fetch(:rvm_map_bins, []).push('rvmsudo')
+set :passenger_restart_command, 'rvmsudo passenger-config restart-app'
 
 namespace :deploy do
 
