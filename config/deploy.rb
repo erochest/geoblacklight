@@ -3,8 +3,7 @@ lock '3.4.0'
 
 set :application, 'geoblacklight'
 set :repo_url, 'https://github.com/waynegraham/geoblacklight.git'
-set :pty, true
-
+set :bundle_jobs, 2
 # Default branch is :master
 ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
 
