@@ -25,7 +25,7 @@ set :deploy_to, "/usr/local/projects/#{fetch(:application)}"
 set :log_level, :info
 
 # Default value for :pty is false
-set :pty, true
+#set :pty, true
 
 # Default value for :linked_files is []
 # set :linked_files, fetch(:linked_files, []).push('config/database.yml')
@@ -38,8 +38,9 @@ set :pty, true
 
 # Default value for keep_releases is 5
 set :keep_releases, 3
-set :rvm_map_bins, fetch(:rvm_map_bins, []).push('rvmsudo')
-set :passenger_restart_command, 'rvmsudo passenger-config restart-app'
+#set :rvm_map_bins, fetch(:rvm_map_bins, []).push('rvmsudo')
+set :passenger_restart_command, 'rvmsudo /usr/local/rvm/gems/ruby-2.1.4/bin/passenger-config restart-app'
+#set :passenger_restart_with_sudo, true
 
 set :tmp_dir, "/tmp/#{ENV['USER']}"
 
