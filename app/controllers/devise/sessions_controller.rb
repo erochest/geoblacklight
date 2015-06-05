@@ -6,9 +6,12 @@ class Devise::SessionsController < DeviseController
 
   # GET /resource/sign_in
   def new
-    Rails.logger.info("############## Remote_user = #{request.env['REMOTE_USER']}##########")
     if request.env['REMOTE_USER']
-      redirect_to catalog_index_path
+      self.resource = resource_class.new(request.env['REMOTE_USER'])
+      set_flash_message(:notice, :signed_in) if is_flashing_format?
+      sign_in(resource_name, resource)
+      yield resource if block_given?
+      respond_with resource, location: after_sign_in_path_for(resource)
     else
       self.resource = resource_class.new(sign_in_params)
       clean_up_passwords(resource)
