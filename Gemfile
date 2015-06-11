@@ -27,8 +27,6 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Use Unicorn as the app server
 # gem 'unicorn'
 
-gem 'opengeometadata_engine', :git => 'https://github.com/waynegraham/opengeometadata_engine.git'
-
 group :production, :staging do
   gem 'mysql2'
 end
