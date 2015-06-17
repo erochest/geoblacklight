@@ -6,20 +6,10 @@ class Devise::SessionsController < DeviseController
 
   # GET /resource/sign_in
   def new
-    Rails.logger.info("############## remote_user = #{request.env['REMOTE_USER'].inspect}")
-    if request.env['REMOTE_USER']
-      self.resource = resource_class.new({:sign_in => request.env['REMOTE_USER']})
-      set_flash_message(:notice, :signed_in) if is_flashing_format?
-      sign_in(resource_name, resource)
-      yield resource if block_given?
-      respond_with resource, location: after_sign_in_path_for(resource)
-    else
-      Rails.logger.info("############## sign_in_param = #{sign_in_params.inspect}")
       self.resource = resource_class.new(sign_in_params)
       clean_up_passwords(resource)
       yield resource if block_given?
       respond_with(resource, serialize_options(resource))
-    end
   end
 
   # POST /resource/sign_in
