@@ -149,6 +149,7 @@ GEM
     multi_json (1.11.1)
     multipart-post (2.0.0)
     mysql2 (0.3.18)
+    net-ldap (0.11)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (2.9.2)
@@ -249,6 +250,7 @@ DEPENDENCIES
   jettywrapper
   jquery-rails
   mysql2
+  net-ldap (~> 0.11)
   rails (~> 4.2.0)
   rsolr (~> 1.0.6)
   sass-rails (~> 5.0)
