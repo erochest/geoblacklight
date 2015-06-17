@@ -8,3 +8,24 @@ $uva-orange: #F36F21;
 .geoblacklight-uva {
   color: $uva-orange;
 }
+
+.geoblacklight-multilinestring:before,
+.geoblacklight-multipolygon:before
+{
+   display: inline-block;
+  font-family: "geoblacklight-icons";
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  line-height: 1;
+  text-decoration: inherit;
+  text-rendering: optimizeLegibility;
+  text-transform: none;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+}
+
+.geoblacklight-multilinestring:before { content: "\f118"; }
+.geoblacklight-multipolygon:before { content: "\f107"; }
+

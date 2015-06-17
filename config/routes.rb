@@ -3,16 +3,6 @@ Rails.application.routes.draw do
   blacklight_for :catalog
   devise_for :users
 
-  get 'metadata/:institution.:format' => 'opengeometadata#index', 
-    :constraints => { :institution => /[\w\.]+/ }, 
-    :defaults => { :format => 'json' }
-
-  get 'metadata/:institution/:layer_id/:metadata_format' => 'opengeometadata#show', 
-    :constraints => { :institution => /[\w\.]+/, :layer_id => /[\w\.:\/-]+/ }, 
-    :defaults => { :format => 'xml' }
-
-  #mount OpengeometadataEngine::Engine => "/opengeometadata_engine"
-
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
