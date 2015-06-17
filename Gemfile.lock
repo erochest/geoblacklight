@@ -96,6 +96,9 @@ GEM
       warden (~> 1.2.3)
     devise-guests (0.3.3)
       devise
+    devise_ldap_authenticatable (0.8.4)
+      devise (>= 3.4.1)
+      net-ldap (>= 0.3.1, < 0.6.0)
     dotenv (2.0.1)
     dotenv-rails (2.0.1)
       dotenv (= 2.0.1)
@@ -149,7 +152,7 @@ GEM
     multi_json (1.11.1)
     multipart-post (2.0.0)
     mysql2 (0.3.18)
-    net-ldap (0.11)
+    net-ldap (0.5.1)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (2.9.2)
@@ -243,6 +246,7 @@ DEPENDENCIES
   coffee-rails (~> 4.1.0)
   devise
   devise-guests (~> 0.3)
+  devise_ldap_authenticatable (~> 0.8.4)
   dotenv-rails
   geoblacklight
   highline
@@ -250,7 +254,6 @@ DEPENDENCIES
   jettywrapper
   jquery-rails
   mysql2
-  net-ldap (~> 0.11)
   rails (~> 4.2.0)
   rsolr (~> 1.0.6)
   sass-rails (~> 5.0)
