@@ -42,8 +42,9 @@ set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/sockets',
 # Default value for keep_releases is 5
 set :keep_releases, 3
 #set :rvm_map_bins, fetch(:rvm_map_bins, []).push('rvmsudo')
-#set :passenger_restart_command, '/usr/local/rvm/gems/ruby-2.1.4/bin/passenger-config restart-app'
-set :passenger_restart_with_sudo, true
+#set :passenger_restart_command, 'sudo /usr/local/rvm/gems/ruby-2.1.4/bin/passenger-config restart-app'
+set :passenger_restart_command, 'sudo passenger-config restart-app'
+#set :passenger_restart_with_sudo, true
 
 set :tmp_dir, "/tmp/#{ENV['USER']}"
 
