@@ -5,8 +5,8 @@ module Devise
   module Strategies
     class LdapAuthenticatable < Authenticatable
       def authenticate!
+        Rails.logger.info("########### USE LDAP INFO #########")
         if params[:user]
-          Rails.logger.info("########### USE LDAP INFO #########")
           ldap = Net::LDAP.new
           ldap.host = ldap.virginia.edu
           ldap.port = 389
@@ -23,10 +23,13 @@ module Devise
       end
 
       def email
-        params[:user][:email]
+        Rails.logger.info("########### USER = #{params[:user].inspect} #########")
+        Rails.logger.info("########### EMAIL = #{params[:user][:mail].inspect} #########")
+        params[:user][:mail]
       end
 
       def password
+        Rails.logger.info("########### PASS = #{params[:user][:password].inspect} #########")
         params[:user][:password]
       end
 
