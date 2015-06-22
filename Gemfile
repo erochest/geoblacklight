@@ -28,6 +28,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # gem 'unicorn'
 
 group :production, :staging do
+  gem 'rack-pubcookie', '~> 0.0.3'
+  gem 'oa-pubcookie', '~> 0.1.0'
   gem 'mysql2'
 end
 
