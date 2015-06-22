@@ -29,6 +29,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 group :production, :staging do
   gem 'mysql2'
+  gem 'devise-login-cookie'
 end
 
 group :development do

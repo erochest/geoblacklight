@@ -8,7 +8,7 @@ module Devise
         Rails.logger.info("########### USE LDAP INFO #########")
         if params[:user]
           ldap = Net::LDAP.new
-          ldap.host = ldap.virginia.edu
+          ldap.host = 'ldap.virginia.edu'
           ldap.port = 389
           Rails.logger.info("########### LDAP AUTH #########")
           ldap.auth email, password
