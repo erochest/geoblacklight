@@ -248,7 +248,7 @@ Devise.setup do |config|
   # Use LDAP authentication
   config.warden do |manager|
     manager.intercept_401 = false
-    manager.default_strategies(scope: :user).unshift :my_authentication
+    manager.default_strategies(scope: :user).unshift :pubcookie_authentication
     #manager.default_strategies(scope: :user).unshift :ldap_authenticatable
 
   end
