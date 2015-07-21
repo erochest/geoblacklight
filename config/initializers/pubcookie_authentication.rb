@@ -1,3 +1,6 @@
+require 'openssl'
+require 'base64'
+
 module Pubcookie
   class CustomStrategy < Devise::Strategies::Authenticatable
 
@@ -9,7 +12,6 @@ module Pubcookie
 
       # but, we want this strategy to be valid for any request with this header set so that we can use a custom
       # response for an invalid request.
-      #request.headers['HTTP_X_MY_API'].present?
       cookies['pubcookie_s_geoblacklight'].present?
     end
 
@@ -26,15 +28,11 @@ module Pubcookie
       klass = mapping.to
 
       if cookies['pubcookie_s_geoblacklight'].present?
-        user = klass.find_or_initialize_by(email: 'wsg4w@virginia.edu')
+        username = extract_username(cookies)
+        email = "#{username}@virginia.edu"
+        user = klass.find_or_initialize_by(email: email)
         success! user
       end
-
-      #if request.headers['HTTP_X_MY_API'].present?
-        # the returned user object will be saved and serialised into the session
-        #user = klass.find_or_initialize_by_email(request.headers['HTTP_X_MY_API'])
-        #success! user
-      #end
 
       # if we wanted to stop other strategies from authenticating the user
     end
@@ -42,34 +40,40 @@ module Pubcookie
 
     private
 
+    def extract_username(cookies)
+      return nil unless cookies['pubcookie_s_geoblacklight'].present?
 
-    # send a 401 back to the client so they can make another request.
-    # a 401 MUST include the 'WWW-Authenticate' header as per spec.
-    # This will also halt warden from allowing any other strategies to continue.
-    #def challenge!
-      #response_headers = { "WWW-Authenticate" => %(Basic realm="My Application"), 'Content-Type' => 'text/plain' }
-      #response_headers['X-WHATEVER'] = "some other value"
-      #body = "401 Unauthorized"
-      #response = Rack::Response.new(body, 401, response_headers)
-      #custom! response.finish
-    #end
+      bytes = Base64.decode(cookies['pubcookie_s_geoblacklight']).bytes.to_a
+      index2 = bytes.pop
+      index1 = bytes.pop
 
-    ## send a 400 back to the client: bad request
-    ## This will also halt warden from allowing any other strategies to continue.
-    #def deny!
-      #body = %(This is an unauthorised request. Your IP address has been logged and will be reported.)
-      #response_headers = { 'Content-Type' => 'text/plain' }
-      #response = Rack::Response.new(body, 400, response_headers)
-      #custom! response.finish
-    #end
+      Rails.logger.debug("extract_username|bytes: #{bytes}")
+      Rails.logger.debug("extract_username|index2: #{index2}")
+      Rails.logger.debug("extract_username|index1: #{index1}")
+      'wsg4w'
+
+      #decrypted = des_decrypt(bytes, index1, index2)
+    end
+
+    def des_decrypt(bytes, index1, index2)
+      # According to http://bit.ly/pubcookie-doc, the initial IVEC is defined
+      # around line 63 and for some reason only the first byte is used in the
+      # xor'ing
+      ivec = @key[index2, 8]
+      ivec = ivec.map{ |i| i ^ 0x4c }
+
+      key = @key[index1, 8]
+      c = OpenSSL::Cipher.new('des-cfb')
+      granting = OpenSSL::X509::Certificate.new(::File.read('/usr/local/pubcookie/keys/pubcookie_granting.cert'))
+    end
 
   end
 end
 
-# for warden, `:my_authentication`` is just a name to identify the strategy
+# for warden, `:pubcookie_authentication`` is just a name to identify the strategy
 Warden::Strategies.add :pubcookie_authentication, Pubcookie::CustomStrategy
 
-# for devise, there must be a module named 'MyAuthentication' (name.to_s.classify), and then it looks to warden
-# for that strategy. This strategy will only be enabled for models using devise and `:my_authentication` as an
+# for devise, there must be a module named 'PubcookieAuthentication' (name.to_s.classify), and then it looks to warden
+# for that strategy. This strategy will only be enabled for models using devise and `:pubcookie_authentication` as an
 # option in the `devise` class method within the model.
 Devise.add_module :pubcookie_authentication, :strategy => true
