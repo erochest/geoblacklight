@@ -12,7 +12,8 @@ module Pubcookie
 
       # but, we want this strategy to be valid for any request with this header set so that we can use a custom
       # response for an invalid request.
-      cookies['pubcookie_s_geoblacklight'].present?
+      #cookies['pubcookie_s_geoblacklight'].present?
+      request.env['REMOTE_USER'].present?
     end
 
 
@@ -27,12 +28,17 @@ module Pubcookie
       # the `devise` class method in that model
       klass = mapping.to
 
-      if cookies['pubcookie_s_geoblacklight'].present?
-        username = extract_username(cookies)
-        email = "#{username}@virginia.edu"
+      if request.env['REMOTE_USER'].present?
+        email = "#{request.env['REMOTE_USER']}@virginia.edu"
         user = klass.find_or_initialize_by(email: email)
-        success! user
       end
+
+      #if cookies['pubcookie_s_geoblacklight'].present?
+        #username = extract_username(cookies)
+        #email = "#{username}@virginia.edu"
+        #user = klass.find_or_initialize_by(email: email)
+        #success! user
+      #end
 
       # if we wanted to stop other strategies from authenticating the user
     end
@@ -43,28 +49,32 @@ module Pubcookie
     def extract_username(cookies)
       return nil unless cookies['pubcookie_s_geoblacklight'].present?
 
-      bytes = Base64.decode(cookies['pubcookie_s_geoblacklight']).bytes.to_a
+      cookie = cookies['pubcookie_s_geoblacklight']
+      bytes  = Base64.decode64(cookie).bytes.to_a
+
       index2 = bytes.pop
       index1 = bytes.pop
 
-      Rails.logger.debug("extract_username|bytes: #{bytes}")
-      Rails.logger.debug("extract_username|index2: #{index2}")
-      Rails.logger.debug("extract_username|index1: #{index1}")
-      'wsg4w'
-
-      #decrypted = des_decrypt(bytes, index1, index2)
+      decrypted = des_decrypt(bytes, index1, index2)
     end
 
     def des_decrypt(bytes, index1, index2)
       # According to http://bit.ly/pubcookie-doc, the initial IVEC is defined
       # around line 63 and for some reason only the first byte is used in the
       # xor'ing
-      ivec = @key[index2, 8]
-      ivec = ivec.map{ |i| i ^ 0x4c }
+      # no perms on the files
+      #@keyfile = "/etc/pki/tls/private/STAR_LIB_key.pem"
+      #@granting_cert = "/usr/local/pubcookie/keys/pubcookie_granting.cert"
+      #::File.open(@keyfile, 'rb'){ |f| @key = f.read.bytes.to_a }
+      #ivec = @key[index2, 8]
+      #ivec = ivec.map{ |i| i ^ 0x4c }
 
-      key = @key[index1, 8]
-      c = OpenSSL::Cipher.new('des-cfb')
-      granting = OpenSSL::X509::Certificate.new(::File.read('/usr/local/pubcookie/keys/pubcookie_granting.cert'))
+      #Rails.logger.debug(ivec)
+
+      #key = @key[index1, 8]
+      #c = OpenSSL::Cipher.new('des-cfb')
+      #@granting = OpenSSL::X509::Certificate.new(::File.read(@granting_cert))
+      #Rails.logger.debug(granting)
     end
 
   end
