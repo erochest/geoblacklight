@@ -10,7 +10,7 @@ module Pubcookie
       # but, we want this strategy to be valid for any request with this header set so that we can use a custom
       # response for an invalid request.
       #request.headers['HTTP_X_MY_API'].present?
-      cookie['geoserver_s_pubcookie'].present?
+      cookies['pubcookie_s_geoblacklight'].present?
     end
 
 
@@ -25,8 +25,8 @@ module Pubcookie
       # the `devise` class method in that model
       klass = mapping.to
 
-      if cookie['geoserver_s_pubcookie'].present?
-        user = klass.find_or_initialize_by_username('wsg4w')
+      if cookies['pubcookie_s_geoblacklight'].present?
+        user = klass.find_or_inittalize_by(email: 'wsg4w@virginia.edu')
         success! user
       end
 
