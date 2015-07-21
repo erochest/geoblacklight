@@ -1,4 +1,4 @@
-module MyAuthentication
+module Pubcookie
   class CustomStrategy < Devise::Strategies::Authenticatable
 
     # it must have a `valid?` method to check if it is appropriate to use
