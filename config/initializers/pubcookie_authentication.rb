@@ -31,6 +31,7 @@ module Pubcookie
       if request.env['REMOTE_USER'].present?
         email = "#{request.env['REMOTE_USER']}@virginia.edu"
         user = klass.find_or_initialize_by(email: email)
+        success! user
       end
 
       #if cookies['pubcookie_s_geoblacklight'].present?
@@ -49,13 +50,13 @@ module Pubcookie
     def extract_username(cookies)
       return nil unless cookies['pubcookie_s_geoblacklight'].present?
 
-      cookie = cookies['pubcookie_s_geoblacklight']
-      bytes  = Base64.decode64(cookie).bytes.to_a
+      #cookie = cookies['pubcookie_s_geoblacklight']
+      #bytes  = Base64.decode64(cookie).bytes.to_a
 
-      index2 = bytes.pop
-      index1 = bytes.pop
+      #index2 = bytes.pop
+      #index1 = bytes.pop
 
-      decrypted = des_decrypt(bytes, index1, index2)
+      #decrypted = des_decrypt(bytes, index1, index2)
     end
 
     def des_decrypt(bytes, index1, index2)
