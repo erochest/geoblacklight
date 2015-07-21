@@ -26,7 +26,7 @@ module Pubcookie
       klass = mapping.to
 
       if cookies['pubcookie_s_geoblacklight'].present?
-        user = klass.find_or_inittalize_by(email: 'wsg4w@virginia.edu')
+        user = klass.find_or_initialize_by(email: 'wsg4w@virginia.edu')
         success! user
       end
 
