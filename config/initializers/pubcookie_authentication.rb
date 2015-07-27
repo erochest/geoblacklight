@@ -22,6 +22,8 @@ module Pubcookie
       # the `devise` class method in that model
       klass = mapping.to
 
+      Rails.logger.info("############## Debug pubcookie_authenticate.rb: " + request.env['REMOTE_USER'] )
+
       if request.env['REMOTE_USER'].present?
         email = "#{request.env['REMOTE_USER']}@virginia.edu"
         user = klass.find_or_initialize_by(email: email)
