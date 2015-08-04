@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   blacklight_for :catalog
   devise_for :users
 
+  get '/profile', to: 'users#show'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
