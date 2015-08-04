@@ -23,7 +23,7 @@ class Devise::SessionsController < DeviseController
     sign_in(resource_name, resource)
     yield resource if block_given?
     #respond_with resource, location: after_sign_in_path_for(resource)
-    redirect_to after_sign_in_path_for(reseource)
+    redirect_to after_sign_in_path_for(resource)
   end
 
   # DELETE /resource/sign_out
